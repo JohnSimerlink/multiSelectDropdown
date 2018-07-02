@@ -21,6 +21,7 @@ function MultiGroupSelect(el){
 	console.log('instantiating a new multiGroupSelect el', el)
 	resizeMultiSelectElement(el)
 	createDropdownButton(el)
+	makeGroupsClickable(el)
 }
 
 function createDropdownButton(multiselectElement,){
@@ -44,6 +45,32 @@ function createDropdownButton(multiselectElement,){
 	// hide dropdown on it
 	toggleDropdown(multiselectElement, icon)
 
+}
+function makeGroupsClickable(el){
+	const groups = el.querySelectorAll('optgroup')
+	;[].forEach.call(groups, group => {
+		group.addEventListener('click', (event) => {
+			const target = event.target
+			console.log('target tag name is', target.tagName)
+			if (target.tagName.toLocaleLowerCase() !== 'optgroup') { 
+				return
+			}
+			clickGroup(target)
+		})
+	})
+}
+function clickGroup(group){
+	console.log("group is ", group)
+	const options = group.querySelectorAll('option')
+		console.log("options ", options)
+
+	const hasAllOptionsSelected = [].every.call(options, option => option.selected)
+
+	if (hasAllOptionsSelected) {
+		[].forEach.call(options, option => option.selected = false)
+	} else {
+		[].forEach.call(options, option => option.selected = true)
+	}
 }
 
 function toggleDropdown(multiselectElement, icon) {
