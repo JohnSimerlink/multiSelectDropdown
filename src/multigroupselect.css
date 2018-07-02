@@ -38,7 +38,7 @@
 }
 
 .mgs-group_multiselect {
-	position: fixed;
+	position: absolute;
 	width: inherit;
 	height: 100%;
 	max-height: 300px;
