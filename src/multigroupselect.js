@@ -29,7 +29,7 @@ class MultiGroupSelect {
 	}
 }
 
-function createDropdownButton(multiselectElement,){
+function createDropdownButton(multiselectElement,self){
 	const dropdownButton = document.createElement('div')
 	const dropdownButtonText = document.createElement('span')
 	const defaultText = multiselectElement.getAttribute('data-label')
@@ -41,16 +41,19 @@ function createDropdownButton(multiselectElement,){
 	icon.classList = DROPDOWN_CARET_DOWN_CLASS_NAME
 
 	dropdownButton.addEventListener('click',() => {
-		toggleDropdown(multiselectElement, icon)
+		toggleDropdown(multiselectElement, icon, self)
 	})
-	//close dropdown upon clicking somewhere else on the page
-	// body.addEventListener('click', (event) => {
-	// 	const target = event.target
-	// 	if (target === multiselectElement) {
-	// 		return
-	// 	}
-
-	// })
+	// close dropdown upon clicking somewhere else on the page
+	body.addEventListener('click', (event) => {
+		console.log("body click", event.target, multiselectElement)
+		const target = event.target
+		if (multiselectElement.contains(target) || target === dropdownButton) {
+			return
+		}
+		if (!self.closed) {
+			toggleDropdown(multiselectElement, icon, self)
+		}
+	})
 
 
 	dropdownButton.appendChild(dropdownButtonText)
@@ -61,7 +64,7 @@ function createDropdownButton(multiselectElement,){
 	multiselectElementParent.insertBefore(dropdownButton, multiselectElement)
 
 	// hide dropdown on it
-	toggleDropdown(multiselectElement, icon)
+	toggleDropdown(multiselectElement, icon, self)
 
 	return dropdownButton
 
@@ -92,11 +95,10 @@ function clickGroup(group){
 		[].forEach.call(options, option => option.selected = true)
 	}
 }
-const dropdownclosed = true
-function toggleDropdown(multiselectElement, icon) {
+function toggleDropdown(multiselectElement, icon, self) {
 	icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_DOWN_CLASS_NAME
 	;multiselectElement.classList.contains(HIDDEN_CLASS_NAME) ? multiselectElement.classList.remove(HIDDEN_CLASS_NAME) : multiselectElement.classList.add(HIDDEN_CLASS_NAME)
-	closed = !closed
+	self.closed = !self.closed
 }
 function resizeMultiSelectElement(selectElement) {
 	console.log(		'resizeMultiSelectElement', selectElement)
