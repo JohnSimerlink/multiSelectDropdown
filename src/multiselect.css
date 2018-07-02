@@ -1,0 +1,38 @@
+
+.group_multiselect_title {
+	border: 3px solid black;
+	margin-bottom: 15px;
+	box-shadow: 1px 1px 3px 1px #8bbcf4;
+	display: block;
+	height: 40px;
+	max-width: 100%;
+	background-color: white;
+	width: 100%;
+	color: #111;;
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 4px;
+	cursor: pointer;
+}
+
+.dropdown_caret_down {
+	border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-right: 4px;
+	transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.dropdown_caret_up {
+	border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-right: 4px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
