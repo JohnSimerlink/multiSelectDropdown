@@ -7,8 +7,8 @@ ready(() => {
 })
 
 function init() {
-	const mulitselectElements = document.querySelectorAll('.' + MULTI_SELECT_CLASS_NAME)
-	;[].forEach.call(mulitselectElements, makeMultiGroupSelect)
+	const multiselectElements = document.querySelectorAll('.' + MULTI_SELECT_CLASS_NAME)
+	;[].forEach.call(multiselectElements, makeMultiGroupSelect)
 }
 
 function makeMultiGroupSelect(el) {
@@ -30,15 +30,24 @@ function createDropdownButton(multiselectElement,){
 	icon.classList = 'dropdown_caret_down'
 
 	fakeDropdown.addEventListener('click',() => {
-		icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_UP_CLASS_NAME
+		toggleDropdown(multiselectElement, icon)
 	})
+
+	fakeDropdown.appendChild(icon)
 	const multiselectElementParent = multiselectElement.parentNode
 
 
 	multiselectElementParent.insertBefore(fakeDropdown, multiselectElement)
 
+	// hide dropdown on it
+	toggleDropdown(multiselectElement, icon)
+
 }
 
+function toggleDropdown(multiselectElement, icon) {
+	icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_DOWN_CLASS_NAME
+	;multiselectElement.classList.contains('hidden') ? multiselectElement.classList.remove('hidden') : multiselectElement.classList.add('hidden')
+}
 function resizeMultiSelectElement(el) {
 	console.log(		'resizeMultiSelectElement', el)
 	const MAX_ITEMS_DISPLAYED_AT_ONCE = 10
