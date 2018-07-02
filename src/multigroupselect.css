@@ -45,5 +45,38 @@
 	z-index: 1;
 }
 .mgs-hidden {
-	display: none;
+  display: none;
+}
+
+.mgs-close {
+  /*position: absolute;*/
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+.mgs-close:hover {
+  opacity: 1;
+}
+.mgs-close:before, .mgs-close:after {
+  position: absolute;
+  /*left: 15px;*/
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: red;
+}
+.mgs-close:before {
+  transform: rotate(45deg);
+}
+.mgs-close:after {
+  transform: rotate(-45deg);
+}
+.mgs-icon-container {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	width: 20%;
+	align-items: center;
 }
