@@ -1,6 +1,8 @@
-const MULTI_SELECT_CLASS_NAME = 'group_multiselect'
-const DROPDOWN_CARET_DOWN_CLASS_NAME = 'dropdown_caret_down'
-const DROPDOWN_CARET_UP_CLASS_NAME = 'dropdown_caret_up'
+const MULTI_SELECT_CLASS_NAME = 'mgs-group_multiselect'
+const DROPDOWN_CARET_DOWN_CLASS_NAME = 'mgs-dropdown_caret_down'
+const DROPDOWN_CARET_UP_CLASS_NAME = 'mgs-dropdown_caret_up'
+const DROPDOWN_BUTTON_CLASS_NAME = "mgs-group_multiselect_button"
+const HIDDEN_CLASS_NAME = 'mgs-hidden'
 
 ready(() => {
 	init()
@@ -23,11 +25,11 @@ function MultiGroupSelect(el){
 
 function createDropdownButton(multiselectElement,){
 	const fakeDropdown = document.createElement('div')
-	fakeDropdown.classList = "group_multiselect_title"
+	fakeDropdown.classList = DROPDOWN_BUTTON_CLASS_NAME
 
 	fakeDropdown.textContent = multiselectElement.getAttribute('data-label')
 	const icon = document.createElement('i')
-	icon.classList = 'dropdown_caret_down'
+	icon.classList = DROPDOWN_CARET_DOWN_CLASS_NAME
 
 	fakeDropdown.addEventListener('click',() => {
 		toggleDropdown(multiselectElement, icon)
@@ -46,7 +48,7 @@ function createDropdownButton(multiselectElement,){
 
 function toggleDropdown(multiselectElement, icon) {
 	icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_DOWN_CLASS_NAME
-	;multiselectElement.classList.contains('hidden') ? multiselectElement.classList.remove('hidden') : multiselectElement.classList.add('hidden')
+	;multiselectElement.classList.contains(HIDDEN_CLASS_NAME) ? multiselectElement.classList.remove(HIDDEN_CLASS_NAME) : multiselectElement.classList.add(HIDDEN_CLASS_NAME)
 }
 function resizeMultiSelectElement(el) {
 	console.log(		'resizeMultiSelectElement', el)
