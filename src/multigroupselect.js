@@ -34,6 +34,7 @@ class MultiGroupSelect {
 		makeButtonTextDisplayClickedOptions(multiSelectElement, dropdownButton, self)
 	}
 	showX() {
+		if (this.showingX) return
 		this.showingX = true
 		this.deleteIcon.classList.remove(HIDDEN_CLASS_NAME)
 	}
@@ -45,6 +46,7 @@ class MultiGroupSelect {
 		const options = this.multiSelectElement.querySelectorAll('option')
 		;[].forEach.call(options, option => option.selected = false)
 		this.resetButtonText()
+		this.hideX();
 
 	}
 	resetButtonText() {
@@ -57,7 +59,11 @@ class MultiGroupSelect {
 		deleteIcon.classList.add(DROPDOWN_DELETE_CLASS_NAME)
 		deleteIcon.classList.add(HIDDEN_CLASS_NAME)
 
-		deleteIcon.addEventListener
+
+		deleteIcon.addEventListener('click', event => {
+			event.stopPropagation()
+			this.unselectOptions()
+		})
 	}
 }
 
@@ -103,8 +109,10 @@ function createDropdownButton(multiselectElement,self){
 	})
 
 	dropdownButton.appendChild(dropdownButtonText)
-	iconContainer.appendChild(self.deleteIcon)
+	// append in reverse order because of row reverse flex direction
 	iconContainer.appendChild(arrowIcon)
+	iconContainer.appendChild(self.deleteIcon)
+
 
 	dropdownButton.appendChild(iconContainer)
 
@@ -173,8 +181,10 @@ function makeButtonTextDisplayClickedOptions(multiSelectElement, button, self){
 		}, [])
 		if (values.length === 0) {
 			self.resetButtonText()
+			self.hideX()
 		} else {
 			self.dropdownButtonText.textContent = values.length + " item(s) selected"
+			self.showX()
 		}
 		console.log('values', values)
 	})
