@@ -37,6 +37,7 @@ class MultiGroupSelect {
 		this.deleteIcon.classList.remove(HIDDEN_CLASS_NAME)
 	}
 	hideX() {
+		if (!this.showingX) return
 		this.showingX = false
 		this.deleteIcon.classList.add(HIDDEN_CLASS_NAME)
 	}
