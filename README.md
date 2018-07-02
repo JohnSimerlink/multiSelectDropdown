@@ -6,6 +6,8 @@ I needed a multi-select dropdown with the below features, and couldn't find anyt
 - `git clone https://github.com/JohnSimerlink/multiSelectDropdown.git`
 - copy and paste the multigroupselect.css and multigroupselect.js files into your project appropriately
 - in your index.html include the multigroupselect.css and multigroupselect.js files appropriately. or otherwise use the files with ES6 modules or some webpack importing system
+- add `class="mgs-group_multiselect"` to your `select` element that already has the `multiple` attribute listed
+- add a `data-label` attribute to your select element. e.g. `<select multiple data-label="Choose Some Presidents" class="mgs-group_multiselect">....</select>`
 
 # Features
 - [x] clicking on the title/label on the menu reveals all the options of the menu, but no options are revealed before clicking
