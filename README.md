@@ -16,6 +16,7 @@ I needed a multi-select dropdown with the below features, and couldn't find anyt
 - [x] clicking on the title/label on the menu reveals all the options of the menu, but no options are revealed before clicking
 - [x] when the menu is revealed it should be overlayed upon lower elements, and not push them down
 - [x] clicking on a group name selects all of the options under the group name
+- [x] clicking on the red x deselects all selections
 - [] ability to pass in custom classes
 
 ## TODO
