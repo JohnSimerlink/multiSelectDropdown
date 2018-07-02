@@ -7,7 +7,7 @@ ready(() => {
 })
 
 function init() {
-	const mulitselectElements = document.querySelector('.' + CLASS_NAME)
+	const mulitselectElements = document.querySelectorAll('.' + MULTI_SELECT_CLASS_NAME)
 	;[].forEach.call(mulitselectElements, makeMultiGroupSelect)
 }
 
@@ -16,8 +16,9 @@ function makeMultiGroupSelect(el) {
 }
 function MultiGroupSelect(el){
 	// const multiselectElement = document.querySelector(selector)
-	console.log('instantiating a new multiGroupSelect el')
-
+	console.log('instantiating a new multiGroupSelect el', el)
+	resizeMultiSelectElement(el)
+	createDropdownButton(el)
 }
 
 function createDropdownButton(multiselectElement,){
@@ -29,12 +30,22 @@ function createDropdownButton(multiselectElement,){
 	icon.classList = 'dropdown_caret_down'
 
 	fakeDropdown.addEventListener('click',() => {
-		icon.classList = icon.classList.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_UP_CLASS_NAME
+		icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_UP_CLASS_NAME
 	})
 	const multiselectElementParent = multiselectElement.parentNode
 
-	multiselectElementParent.insertBefore(multiselectElement, fakeDropdown)
 
+	multiselectElementParent.insertBefore(fakeDropdown, multiselectElement)
+
+}
+
+function resizeMultiSelectElement(el) {
+	console.log(		'resizeMultiSelectElement', el)
+	const MAX_ITEMS_DISPLAYED_AT_ONCE = 10
+	const numOptions = el.querySelectorAll('option').length
+	const numGroups = el.querySelectorAll('optgroup').length
+	const numRows = numOptions + numGroups
+	el.size = numRows > MAX_ITEMS_DISPLAYED_AT_ONCE ? MAX_ITEMS_DISPLAYED_AT_ONCE: numRows
 }
 
 
