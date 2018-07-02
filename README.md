@@ -2,14 +2,19 @@
 
 I needed a multi-select dropdown with the below features, and couldn't find anything that was exactly what I wanted, so I wrote this little library.
 
+# USAGE
+- `git clone https://github.com/JohnSimerlink/multiSelectDropdown.git`
+- copy and paste the multigroupselect.css and multigroupselect.js files into your project appropriately
+- in your index.html include the multigroupselect.css and multigroupselect.js files appropriately. or otherwise use the files with ES6 modules or some webpack importing system
+
 # Features
-- [] clicking on the title/label on the menu reveals all the options of the menu, but no options are revealed before clicking
-- [] when the menu is revealed it should be overlayed upon lower elements, and not push them down
-- [] clicking on a group name selects all of the options under the group name
+- [x] clicking on the title/label on the menu reveals all the options of the menu, but no options are revealed before clicking
+- [x] when the menu is revealed it should be overlayed upon lower elements, and not push them down
+- [x] clicking on a group name selects all of the options under the group name
 - [] ability to pass in custom classes
 
 ## TODO
-- [] index.html that has a test list with data-label element, and that imports the library first from a statically written js file and css file
+- [x] index.html that has a test list with data-label element, and that imports the library first from a statically written js file and css file
 - [] get index.html importing from webpack-dev-server live or from the compiled file in /dist
 - [] transition to use SASS/LESS
 - [] transition to use HAML
