@@ -3,7 +3,7 @@ const DROPDOWN_CARET_DOWN_CLASS_NAME = 'mgs-dropdown_caret_down'
 const DROPDOWN_CARET_UP_CLASS_NAME = 'mgs-dropdown_caret_up'
 const DROPDOWN_BUTTON_CLASS_NAME = "mgs-group_multiselect_button"
 const HIDDEN_CLASS_NAME = 'mgs-hidden'
-
+console.log("multgroupselect js called")
 ready(() => {
 	init()
 })
@@ -20,8 +20,9 @@ function makeMultiGroupSelect(el) {
 class MultiGroupSelect {
 	constructor(selectElement){
 		this.selectElement = selectElement
+		this.id = Math.random()
 		const self = this
-		console.log('instantiating a new multiGroupSelect el', selectElement)
+		console.log(self.id, 'instantiating a new multiGroupSelect el', selectElement)
 		resizeMultiSelectElement(selectElement)
 		const dropdownButton = createDropdownButton(selectElement, self)
 		makeGroupsClickable(selectElement)
@@ -47,12 +48,22 @@ function createDropdownButton(multiselectElement,self){
 	body.addEventListener('click', (event) => {
 		console.log("body click", event.target, multiselectElement)
 		const target = event.target
-		if (multiselectElement.contains(target) || target === dropdownButton) {
+		if (multiselectElement.contains(target)){
+			console.log(self.id, 'the multiselect element contains the targt')
+			return
+		} 
+		if (dropdownButton.contains(target)) {
+			console.log(self.id, 'the dropdown button is the target',)
 			return
 		}
+		// if not clicking on the dropdown||button right now, and the dropdown is open, then close the dropdown
 		if (!self.closed) {
 			toggleDropdown(multiselectElement, icon, self)
+			console.log(self.id, 'the dropdown was just closed')
+		} else {
+			console.log(self.id, 'the dropdown was just open')
 		}
+
 	})
 
 
@@ -96,9 +107,13 @@ function clickGroup(group){
 	}
 }
 function toggleDropdown(multiselectElement, icon, self) {
+	console.log(self.id, 'toggleDropdown started called. the closed state is now', self.closed)
+
 	icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_DOWN_CLASS_NAME
 	;multiselectElement.classList.contains(HIDDEN_CLASS_NAME) ? multiselectElement.classList.remove(HIDDEN_CLASS_NAME) : multiselectElement.classList.add(HIDDEN_CLASS_NAME)
 	self.closed = !self.closed
+	console.log(self.id, 'toggleDropdown ended called. the closed state is now', self.closed)
+
 }
 function resizeMultiSelectElement(selectElement) {
 	console.log(		'resizeMultiSelectElement', selectElement)
