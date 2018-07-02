@@ -16,19 +16,24 @@ function init() {
 function makeMultiGroupSelect(el) {
 	new MultiGroupSelect(el)
 }
-function MultiGroupSelect(el){
-	// const multiselectElement = document.querySelector(selector)
-	console.log('instantiating a new multiGroupSelect el', el)
-	resizeMultiSelectElement(el)
-	const dropdownButton = createDropdownButton(el)
-	makeGroupsClickable(el)
-	makeButtonTextDisplayClickedOptions(el, dropdownButton)
+
+class MultiGroupSelect {
+	constructor(selectElement){
+		this.selectElement = selectElement
+		const self = this
+		console.log('instantiating a new multiGroupSelect el', selectElement)
+		resizeMultiSelectElement(selectElement)
+		const dropdownButton = createDropdownButton(selectElement, self)
+		makeGroupsClickable(selectElement)
+		makeButtonTextDisplayClickedOptions(selectElement, dropdownButton)
+	}
 }
 
 function createDropdownButton(multiselectElement,){
 	const dropdownButton = document.createElement('div')
 	const dropdownButtonText = document.createElement('span')
 	const defaultText = multiselectElement.getAttribute('data-label')
+	const body = document.querySelector('body')
 	dropdownButton.classList = DROPDOWN_BUTTON_CLASS_NAME
 
 	dropdownButtonText.textContent = defaultText
@@ -38,6 +43,15 @@ function createDropdownButton(multiselectElement,){
 	dropdownButton.addEventListener('click',() => {
 		toggleDropdown(multiselectElement, icon)
 	})
+	//close dropdown upon clicking somewhere else on the page
+	// body.addEventListener('click', (event) => {
+	// 	const target = event.target
+	// 	if (target === multiselectElement) {
+	// 		return
+	// 	}
+
+	// })
+
 
 	dropdownButton.appendChild(dropdownButtonText)
 	dropdownButton.appendChild(icon)
@@ -52,8 +66,8 @@ function createDropdownButton(multiselectElement,){
 	return dropdownButton
 
 }
-function makeGroupsClickable(el){
-	const groups = el.querySelectorAll('optgroup')
+function makeGroupsClickable(selectElement){
+	const groups = selectElement.querySelectorAll('optgroup')
 	;[].forEach.call(groups, group => {
 		group.addEventListener('click', (event) => {
 			const target = event.target
@@ -78,18 +92,19 @@ function clickGroup(group){
 		[].forEach.call(options, option => option.selected = true)
 	}
 }
-
+const dropdownclosed = true
 function toggleDropdown(multiselectElement, icon) {
 	icon.className= icon.className.indexOf(DROPDOWN_CARET_DOWN_CLASS_NAME) > -1 ? DROPDOWN_CARET_UP_CLASS_NAME : DROPDOWN_CARET_DOWN_CLASS_NAME
 	;multiselectElement.classList.contains(HIDDEN_CLASS_NAME) ? multiselectElement.classList.remove(HIDDEN_CLASS_NAME) : multiselectElement.classList.add(HIDDEN_CLASS_NAME)
+	closed = !closed
 }
-function resizeMultiSelectElement(el) {
-	console.log(		'resizeMultiSelectElement', el)
+function resizeMultiSelectElement(selectElement) {
+	console.log(		'resizeMultiSelectElement', selectElement)
 	const MAX_ITEMS_DISPLAYED_AT_ONCE = 10
-	const numOptions = el.querySelectorAll('option').length
-	const numGroups = el.querySelectorAll('optgroup').length
+	const numOptions = selectElement.querySelectorAll('option').length
+	const numGroups = selectElement.querySelectorAll('optgroup').length
 	const numRows = numOptions + numGroups
-	el.size = numRows > MAX_ITEMS_DISPLAYED_AT_ONCE ? MAX_ITEMS_DISPLAYED_AT_ONCE: numRows
+	selectElement.size = numRows > MAX_ITEMS_DISPLAYED_AT_ONCE ? MAX_ITEMS_DISPLAYED_AT_ONCE: numRows
 }
 
 function makeButtonTextDisplayClickedOptions(multiSelectElement, button){
