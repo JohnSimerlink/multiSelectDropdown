@@ -24,7 +24,7 @@ function makeMultiGroupSelect(el) {
 class MultiGroupSelect {
 	constructor(multiSelectElement){
 		this.multiSelectElement = multiSelectElement
-		this.defaultText = multiSelectElement.getAttribute('data-label')
+		this.defaultButtonText = multiSelectElement.getAttribute('data-label')
 		this.id = Math.random()
 		const self = this
 		console.log(self.id, 'instantiating a new multiGroupSelect el', multiSelectElement)
@@ -44,10 +44,20 @@ class MultiGroupSelect {
 	unselectOptions() {
 		const options = this.multiSelectElement.querySelectorAll('option')
 		;[].forEach.call(options, option => option.selected = false)
+		this.resetButtonText()
 
 	}
 	resetButtonText() {
-		this.dropdownButtonText.textContent = this.defaultText
+		this.dropdownButtonText.textContent = this.defaultButtonText
+	}
+	makeDeleteIcon(){
+		const deleteIcon = document.createElement('i')
+		this.deleteIcon = deleteIcon
+
+		deleteIcon.classList.add(DROPDOWN_DELETE_CLASS_NAME)
+		deleteIcon.classList.add(HIDDEN_CLASS_NAME)
+
+		deleteIcon.addEventListener
 	}
 }
 
@@ -61,14 +71,11 @@ function createDropdownButton(multiselectElement,self){
 
 	const arrowIcon = document.createElement('i')
 	arrowIcon.classList.add(DROPDOWN_CARET_DOWN_CLASS_NAME)
-	const deleteIcon = document.createElement('i')
-	self.deleteIcon = deleteIcon
 
-	deleteIcon.classList.add(DROPDOWN_DELETE_CLASS_NAME)
-	deleteIcon.classList.add(HIDDEN_CLASS_NAME)
 	const iconContainer = document.createElement('span')
 	iconContainer.classList.add(DROPDOWN_ICON_CONTAINER_CLASS_NAME)
 	console.log("icon container class List", iconContainer.classList)
+	self.makeDeleteIcon()
 
 	dropdownButton.addEventListener('click', () => {
 		toggleDropdown(multiselectElement, arrowIcon, self)
@@ -96,7 +103,7 @@ function createDropdownButton(multiselectElement,self){
 	})
 
 	dropdownButton.appendChild(dropdownButtonText)
-	iconContainer.appendChild(deleteIcon)
+	iconContainer.appendChild(self.deleteIcon)
 	iconContainer.appendChild(arrowIcon)
 
 	dropdownButton.appendChild(iconContainer)
