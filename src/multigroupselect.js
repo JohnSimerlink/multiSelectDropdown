@@ -20,30 +20,36 @@ function MultiGroupSelect(el){
 	// const multiselectElement = document.querySelector(selector)
 	console.log('instantiating a new multiGroupSelect el', el)
 	resizeMultiSelectElement(el)
-	createDropdownButton(el)
+	const dropdownButton = createDropdownButton(el)
 	makeGroupsClickable(el)
+	makeButtonTextDisplayClickedOptions(el, dropdownButton)
 }
 
 function createDropdownButton(multiselectElement,){
-	const fakeDropdown = document.createElement('div')
-	fakeDropdown.classList = DROPDOWN_BUTTON_CLASS_NAME
+	const dropdownButton = document.createElement('div')
+	const dropdownButtonText = document.createElement('span')
+	const defaultText = multiselectElement.getAttribute('data-label')
+	dropdownButton.classList = DROPDOWN_BUTTON_CLASS_NAME
 
-	fakeDropdown.textContent = multiselectElement.getAttribute('data-label')
+	dropdownButtonText.textContent = defaultText
 	const icon = document.createElement('i')
 	icon.classList = DROPDOWN_CARET_DOWN_CLASS_NAME
 
-	fakeDropdown.addEventListener('click',() => {
+	dropdownButton.addEventListener('click',() => {
 		toggleDropdown(multiselectElement, icon)
 	})
 
-	fakeDropdown.appendChild(icon)
+	dropdownButton.appendChild(dropdownButtonText)
+	dropdownButton.appendChild(icon)
 	const multiselectElementParent = multiselectElement.parentNode
 
 
-	multiselectElementParent.insertBefore(fakeDropdown, multiselectElement)
+	multiselectElementParent.insertBefore(dropdownButton, multiselectElement)
 
 	// hide dropdown on it
 	toggleDropdown(multiselectElement, icon)
+
+	return dropdownButton
 
 }
 function makeGroupsClickable(el){
@@ -86,6 +92,21 @@ function resizeMultiSelectElement(el) {
 	el.size = numRows > MAX_ITEMS_DISPLAYED_AT_ONCE ? MAX_ITEMS_DISPLAYED_AT_ONCE: numRows
 }
 
+function makeButtonTextDisplayClickedOptions(multiSelectElement, button){
+	const defaultText = multiSelectElement.getAttribute('data-label')
+
+	const buttonText = button.querySelector('span')
+	multiSelectElement.addEventListener('click', event => {
+		const values = [].reduce.call(multiSelectElement.options, (arr, option) => {
+			if (option.selected) {
+				arr.push(option.value)
+			}
+			return arr
+		}, [])
+		buttonText.textContent = values.length === 0 ? defaultText : values.length + " item(s) selected"
+		console.log('values', values)
+	})
+}
 
 function ready(fn) {
   if (document.readyState != 'loading'){
