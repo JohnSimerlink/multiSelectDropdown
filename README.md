@@ -4,7 +4,7 @@ I needed a multi-select dropdown with the below features, and couldn't find anyt
 
 # DEMO
 
-![Demo](demo.gif "Demo")
+![Demo](multiSelectDropdown.gif "Demo")
 # USAGE
 - `git clone https://github.com/JohnSimerlink/multiSelectDropdown.git`
 - copy and paste the multigroupselect.css and multigroupselect.js files into your project appropriately
